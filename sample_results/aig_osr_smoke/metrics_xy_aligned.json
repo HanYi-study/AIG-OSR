@@ -1,0 +1,13 @@
+{
+  "n_reference": 1024,
+  "n_matched": 776,
+  "coverage_percent": 75.78125,
+  "rmse_m": 0.15796223130048065,
+  "mae_m": 0.02562573840206185,
+  "bias_m": -0.019120880154639176,
+  "p95_abs_error_m": 0.042396499999999976,
+  "inlier_threshold_m": 0.1,
+  "inlier_ratio_percent": 98.06701030927834,
+  "xy_tolerance_m": 0.1,
+  "protocol": "nearest XY match, then elevation-only errors"
+}

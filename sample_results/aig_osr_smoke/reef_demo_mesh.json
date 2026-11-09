@@ -1,0 +1,18 @@
+{
+  "source": "sample_results/aig_osr_smoke/DEM_Final_SelectiveDenoise.xyz",
+  "mesh": "sample_results/aig_osr_smoke/reef_demo_mesh.ply",
+  "kind": "reef",
+  "color_range_m": [
+    -1.7450573915672027,
+    0.4519976716703067
+  ],
+  "vertices": 562,
+  "triangles": 756,
+  "input_points": 628,
+  "grid_step_m": 0.10000000000000009,
+  "display_stride": 1,
+  "max_vertical_displacement_m": 0.019335535558725192,
+  "mean_vertical_displacement_m": 0.0027036965685771487,
+  "spike_replaced_cells": 0,
+  "note": "Visualization mesh; smoothing changes some elevations. Evaluate the unsmoothed XYZ DEM."
+}
