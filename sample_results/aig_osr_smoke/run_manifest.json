@@ -1,0 +1,41 @@
+{
+  "parameters": {
+    "las": "sample_data/reef_sparse_10pct.las",
+    "sonar": "sample_data/reef_sss_synthetic.png",
+    "out": "sample_results/aig_osr_smoke",
+    "grid_step": 0.1,
+    "bbox_pad": 0.0,
+    "steps": 10,
+    "lr": 0.0001,
+    "batch_pts": 4096,
+    "w_mbes": 20.0,
+    "w_smooth": 0.003,
+    "w_base0": 0.03,
+    "w_illum_phys": 3.0,
+    "illum_gamma": 4.0,
+    "sonar_dir": "-x",
+    "shadow_q": 0.18,
+    "shadow_thr_smooth_k": 25,
+    "shadow_min_area": 200,
+    "hole_dist": 0.3,
+    "agg": "max",
+    "z_outlier_sigma": 10.0,
+    "hard_smooth_lambda": 0.01,
+    "hard_solver": "cg",
+    "hard_cg_tol": 1e-08,
+    "hard_cg_maxiter": 20000,
+    "seed": 7
+  },
+  "input_sha256": {
+    "las": "7d3999e9964569cf71deb8260fe8b1ef69020c6dd16386fb26e340e650fb1c07",
+    "sonar": "792aa72e0e057ab0fb093c14c566ad862e1ace8209822ea0f71a1c5a2bd62fb6"
+  },
+  "code_sha256": "34a03d3e963a06552fcdb75adec8eb13d5362077bcf99b5e3e4edffc1b22eb81",
+  "versions": {
+    "numpy": "1.24.3",
+    "opencv": "4.13.0",
+    "laspy": "2.5.4",
+    "torch": "2.4.1",
+    "scipy": "1.10.1"
+  }
+}
