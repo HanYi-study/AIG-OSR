@@ -1,0 +1,6 @@
+# Minimal dependencies for the public method and synthetic sample.
+numpy>=1.24,<2
+scipy>=1.10,<2
+opencv-python>=4.8
+laspy>=2.5
+torch>=2.0,<3

@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+.DS_Store
+*.pt
+*.pth
+*.ckpt
+sample_results/*
+!sample_results/aig_osr_smoke/
+!sample_results/aig_osr_smoke/run_manifest.json
+!sample_results/aig_osr_smoke/metrics_xy_aligned.json
+!sample_results/aig_osr_smoke/DEM_Final_SelectiveDenoise.xyz
+!sample_results/aig_osr_smoke/MBES_Control_Raster.xyz
