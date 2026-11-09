@@ -1,0 +1,16 @@
+{
+  "name": "synthetic_reef_demo",
+  "purpose": "I/O and metric-protocol demonstration only; not a paper result",
+  "coordinate_system": "local Cartesian metres",
+  "ground_truth_file": "reef_gt.xyz",
+  "sparse_input_file": "reef_sparse_10pct.xyz",
+  "n_ground_truth": 1024,
+  "n_sparse": 102,
+  "retained_fraction": 0.099609375,
+  "seed": 7,
+  "columns": [
+    "x",
+    "y",
+    "z"
+  ]
+}
