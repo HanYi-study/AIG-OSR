@@ -7,7 +7,7 @@ This repository contains a compact reference implementation of the eight-equatio
 ## Method
 
 1. Filter and rasterize MBES points into metric elevation controls. Build an interpolated baseline.
-2. Extract six SSS-derived conditioning features and an object-boundary mask. A FiLM-conditioned three-layer SIREN predicts a normalized elevation residual relative to the baseline.
+2. Extract six SSS-derived conditioning features and an object-boundary mask. A conditionally modulated three-layer periodic neural field predicts a normalized elevation residual relative to the baseline.
 3. Fit the residual at MBES cells with mask-dependent baseline and gradient penalties. The optional intensity–slope diagnostic is computed without a parameter-gradient path; it is **not** an effective training loss.
 4. Locally filter the preliminary elevation map, then project its correction through a boundary-weighted eight-neighbour graph while fixing MBES control elevations.
 5. Report only cells within the selected raster distance of an occupied MBES control.
@@ -71,9 +71,7 @@ For a real run, replace `--las` and `--sonar` with aligned survey inputs, choose
 README.md
 requirements.txt
 docs/
-  METHODS_EIGHT_EQUATIONS.md
-  EQUATION_CODE_MAP.md
-  PUBLICATION_AUDIT.md
+  EQUATION_CODE_MAP.md 
 reproducibility/
   aig_osr_reference.py
   generate_sample_data.py
