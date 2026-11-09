@@ -24,7 +24,7 @@ We map the MBES bounding box linearly onto the SSS image extent and bilinearly s
 
 ### 2.3. SSS-conditioned continuous elevation field
 
-We estimate the elevation left unexplained by \(Z_{base}\) with a sinusoidal representation network (SIREN; Sitzmann et al., 2020). We condition its hidden layers on the SSS descriptor \(\mathbf c(\mathbf p)\) through feature-wise linear modulation (FiLM; Perez et al., 2018). For each horizontal location \(\mathbf p\), the network predicts a dimensionless normalized residual \(\Delta Z(\mathbf p)\). We convert it to elevation units before adding the baseline:
+We estimate the elevation left unexplained by \(Z_{base}\) with a three-layer periodic neural field. We condition its hidden layers on the SSS descriptor \(\mathbf c(\mathbf p)\) through feature-wise affine conditioning. For each horizontal location \(\mathbf p\), the network predicts a dimensionless normalized residual \(\Delta Z(\mathbf p)\). We convert it to elevation units before adding the baseline:
 
 $$
 Z_{pred}(\mathbf p)=Z_{base}(\mathbf p)
@@ -48,7 +48,7 @@ $$
 \tag{2}
 $$
 
-We write the normalized horizontal coordinate as \(\mathbf h_{-1}\in[-1,1]^2\) and the 64-channel output of sine layer \(i\) as \(\mathbf h_i\), for \(i=0,1,2\). We map the six-component descriptor \(\mathbf c\) to 64 channels with weights \(W_{ext}\) and bias \(\mathbf b_{ext}\), apply a rectified linear unit (ReLU), and project to the 384-component vector \(\Theta\) with \(W_{proj}\) and \(\mathbf b_{proj}\). We split \(\Theta\) into three pairs \((\boldsymbol\gamma_i,\boldsymbol\beta_i)\) of 64-component scale and shift vectors; \(\operatorname{reshape}_i\) denotes that selection. Within sine layer \(i\), \(W_i\) and \(\mathbf b_i\) are the linear weights and bias, \(\omega_0=30\) sets the sine frequency, and \(\alpha=0.1\) bounds the modulation through \(\tanh\). The symbol \(\odot\) denotes component-wise multiplication. The final weights \(W_{out}\) and bias \(\mathbf b_{out}\) map \(\mathbf h_2\) to the scalar residual. This construction yields the initial field used by the metric projection.
+We write the normalized horizontal coordinate as \(\mathbf h_{-1}\in[-1,1]^2\) and the 64-channel output of periodic layer \(i\) as \(\mathbf h_i\), for \(i=0,1,2\). We map the six-component descriptor \(\mathbf c\) to 64 channels with weights \(W_{ext}\) and bias \(\mathbf b_{ext}\), apply a rectified linear unit (ReLU), and project to the 384-component vector \(\Theta\) with \(W_{proj}\) and \(\mathbf b_{proj}\). We split \(\Theta\) into three pairs \((\boldsymbol\gamma_i,\boldsymbol\beta_i)\) of 64-component scale and shift vectors; \(\operatorname{reshape}_i\) denotes that selection. Within periodic layer \(i\), \(W_i\) and \(\mathbf b_i\) are the linear weights and bias, \(\omega_0=30\) sets the periodic frequency, and \(\alpha=0.1\) bounds the conditioning through \(\tanh\). The symbol \(\odot\) denotes component-wise multiplication. The final weights \(W_{out}\) and bias \(\mathbf b_{out}\) map \(\mathbf h_2\) to the scalar residual. This construction yields the initial field used by the metric projection.
 
 We fit the field to MBES controls while discouraging large residuals and rapid variation away from candidate objects. The three effective training terms are
 
