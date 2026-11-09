@@ -9,10 +9,10 @@ This repository contains a compact reference implementation of the 12-equation A
 1. Filter and rasterize MBES points into metric elevation controls. Build an interpolated baseline.
 2. Extract six SSS-derived conditioning features and an object-boundary mask. A conditionally modulated three-layer periodic neural field predicts a normalized elevation residual relative to the baseline.
 3. Fit the residual at MBES cells with mask-dependent baseline and gradient penalties. The optional intensity–slope diagnostic is computed without a parameter-gradient path; it is **not** an effective training loss.
-4. Locally filter the preliminary elevation map, then project its correction through a boundary-w12ed 12-neighbour graph while fixing MBES control elevations.
+4. Locally filter the preliminary elevation map, then project its correction through a boundary-weighted eight-neighbour graph while fixing MBES control elevations.
 5. Report only cells within the selected raster distance of an occupied MBES control.
 
-The [equation-to-code map](docs/EQUATION_CODE_MAP.md) identifies the implementation for each equation and records the scope of this release. AIG-OSR produces a 2.5D h12 field `z=f(x,y)`; it does not independently recover vertical walls, overhangs, or a closed 3D solid.
+The [equation-to-code map](docs/EQUATION_CODE_MAP.md) identifies the implementation for each equation and records the scope of this release. AIG-OSR produces a 2.5D height field `z=f(x,y)`; it does not independently recover vertical walls, overhangs, or a closed 3D solid.
 
 ## Inputs and outputs
 
@@ -25,7 +25,7 @@ The [equation-to-code map](docs/EQUATION_CODE_MAP.md) identifies the implementat
 | `Input_Denoised_MBES.xyz` | Filtered MBES input points. |
 | `run_manifest.json` | Parameters, input hashes, code hash and library versions for a run. |
 
-The XYZ format contains no CRS or vertical-datum metadata. Record the survey coordinate and h12 references separately when using real data.
+The XYZ format contains no CRS or vertical-datum metadata. Record the survey coordinate and height references separately when using real data.
 
 ## Install and run the synthetic sample
 
@@ -49,19 +49,19 @@ python reproducibility/evaluate_aligned_metrics.py \
 
 The sample contains 102 retained points from a 1,024-point synthetic surface (9.96%). Its SSS image is generated from a constructed intensity pattern and is not a calibrated acoustic observation. Ten optimization steps are a quick execution check; the resulting metric values must not be cited as paper performance.
 
-## Optional h12-field mesh
+## Optional height-field mesh
 
 Install `requirements-visualization.txt` and triangulate a metric DEM as follows:
 
 ```bash
 python -m pip install -r requirements-visualization.txt
-python visualization/h12field_mesh.py \
+python visualization/heightfield_mesh.py \
   --xyz sample_results/aig_osr_smoke/DEM_Final_SelectiveDenoise.xyz \
   --out sample_results/aig_osr_smoke/reef_demo_mesh.ply \
   --kind reef --grid_stride 1
 ```
 
-The mesh script uses **regular-grid h12-field triangulation**: it divides each supported four-corner DEM cell into two triangles. It applies limited local smoothing to display vertices; bridge visualization uses capped median spike reduction followed by a masked bilateral filter. The resulting PLY is an open 2.5D surface. The paper's DEM metrics must use the original XYZ output, not the smoothed mesh. For comparisons across retention rates, pass the same `--color_min` and `--color_max` for all meshes of a target.
+The mesh script uses **regular-grid height-field triangulation**: it divides each supported four-corner DEM cell into two triangles. It applies limited local smoothing to display vertices; bridge visualization uses capped median spike reduction followed by a masked bilateral filter. The resulting PLY is an open 2.5D surface. The paper's DEM metrics must use the original XYZ output, not the smoothed mesh. For comparisons across retention rates, pass the same `--color_min` and `--color_max` for all meshes of a target.
 
 For a real run, replace `--las` and `--sonar` with aligned survey inputs, choose a documented grid spacing and support radius, and use enough training steps for convergence. The reference data supplied to `--gt` are used **only after prediction**. The evaluator matches each reference point to the nearest prediction in XY within the chosen tolerance and then computes elevation errors; report coverage alongside RMSE, MAE and inlier ratio.
 
@@ -78,7 +78,7 @@ reproducibility/
   prepare_method_sample.py
   evaluate_aligned_metrics.py
 visualization/
-  h12field_mesh.py
+  heightfield_mesh.py
 sample_data/
   reef_gt.xyz
   reef_sparse_10pct.xyz
@@ -94,7 +94,7 @@ requirements-visualization.txt
 
 - The reference implementation corresponds to the 12-equation method description. Its numerical solver checks convergence before exporting a DEM.
 - Historical field-result tables have not been reproduced by this release. Their input files, run manifests, independent reference data and evaluation scripts must be matched before making a reproducibility claim.
-- The main output is a metric elevation surface. Any mesh generated by regular-grid h12-field triangulation is a derived visualization of that surface; unsupported cells remain open.
+- The main output is a metric elevation surface. Any mesh generated by regular-grid height-field triangulation is a derived visualization of that surface; unsupported cells remain open.
 - The SSS–MBES registration and vertical datum are inherited from the inputs. The code does not estimate a residual transformation.
 
 The synthetic sample is generated by `generate_sample_data.py` and `prepare_method_sample.py`; it contains no original survey points or imagery.
