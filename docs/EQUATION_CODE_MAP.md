@@ -1,4 +1,4 @@
-# Eight equations and reference implementation
+# Equations and reference implementation
 
 The public `reproducibility/aig_osr_reference.py` preserves the metric computation path of the locally audited reference implementation. Renaming the method and removing the unrelated legacy 3D point-densification export do not alter Eqs. (1)–(8).
 
